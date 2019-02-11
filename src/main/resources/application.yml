@@ -2,4 +2,4 @@ spring:
   application:
     name: employee-service
   profiles:
-    active: uat
+    active: ${env}
