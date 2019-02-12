@@ -35,7 +35,7 @@ public class EmployeeServiceApplication {
     @Bean
     EmployeeRepository repository() {
         EmployeeRepository repository = new EmployeeRepository();
-        repository.add(new Employee(1L, 1L, "李世民", 34, "北京"));
+        repository.add(new Employee(1L, 1L, "李世民", 88, "北京"));
         repository.add(new Employee(1L, 1L, "刘邦", 37, "上海"));
         repository.add(new Employee(1L, 1L, "项羽", 26, "天津"));
         repository.add(new Employee(1L, 2L, "李自成", 39, "重庆"));
