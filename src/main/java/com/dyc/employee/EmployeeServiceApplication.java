@@ -35,16 +35,16 @@ public class EmployeeServiceApplication {
     @Bean
     EmployeeRepository repository() {
         EmployeeRepository repository = new EmployeeRepository();
-        repository.add(new Employee(1L, 1L, "zhangsan", 34, "beijing"));
-        repository.add(new Employee(1L, 1L, "lisi", 37, "shanghai"));
-        repository.add(new Employee(1L, 1L, "wangmazi", 26, "tianjin"));
-        repository.add(new Employee(1L, 2L, "lizicheng", 39, "chongqing"));
-        repository.add(new Employee(1L, 2L, "jinzhengen", 27, "xian"));
-        repository.add(new Employee(2L, 3L, "wangjianlin", 38, "chengdu"));
-        repository.add(new Employee(2L, 3L, "zhuzhishan", 34, "hongkong"));
-        repository.add(new Employee(2L, 3L, "mayun", 30, "xiamen"));
-        repository.add(new Employee(2L, 4L, "mahuateng", 25, "wuhan"));
-        repository.add(new Employee(2L, 4L, "lijiacheng", 30, "shenzhen"));
+        repository.add(new Employee(1L, 1L, "李世民", 34, "北京"));
+        repository.add(new Employee(1L, 1L, "刘邦", 37, "上海"));
+        repository.add(new Employee(1L, 1L, "项羽", 26, "天津"));
+        repository.add(new Employee(1L, 2L, "李自成", 39, "重庆"));
+        repository.add(new Employee(1L, 2L, "金正恩", 27, "西安"));
+        repository.add(new Employee(2L, 3L, "王健林", 38, "成都"));
+        repository.add(new Employee(2L, 3L, "祝枝山", 34, "香港"));
+        repository.add(new Employee(2L, 3L, "马云", 30, "杭州"));
+        repository.add(new Employee(2L, 4L, "马化腾", 25, "武汉"));
+        repository.add(new Employee(2L, 4L, "李嘉诚", 30, "深圳"));
         return repository;
     }
 
