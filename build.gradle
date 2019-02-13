@@ -24,10 +24,8 @@ repositories {
 }
 
 ext {
-    set('springCloudVersion', 'Greenwich.RELEASE')
-}
-ext {
     set('springBootAdminVersion', '2.1.1')
+    set('springCloudVersion', 'Greenwich.RELEASE')
 }
 
 dependencies {
