@@ -4,7 +4,7 @@ spring:
   application:
     name: employee-service
   profiles:
-    active: ${env}
+    active: uat
 
 #admin client config
 management:

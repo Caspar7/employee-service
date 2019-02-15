@@ -18,37 +18,28 @@ public class GlobalControllerExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handleException(HttpServletRequest request,
-                                         Exception exception) {
+    public ErrorCodeResponse handleException(HttpServletRequest request,
+                                             Exception exception) {
         LOGGER.error("error: ", exception);
-        return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,
-                exception.getClass().getName(),
-                exception.getMessage(),
-                request.getServletPath());
+        return new ErrorCodeResponse(ErrorCode.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleException(HttpServletRequest request,
-                                         MethodArgumentNotValidException exception) {
+    public ErrorCodeResponse handleException(HttpServletRequest request,
+                                             MethodArgumentNotValidException exception) {
         String message = String.join(", ", exception.getBindingResult().getFieldErrors().stream()
                 .map(e -> e.getField() + " is required")
                 .collect(Collectors.toList()));
         LOGGER.error("error: " + message);
-        return new ErrorResponse(HttpStatus.BAD_REQUEST,
-                exception.getClass().getName(),
-                message,
-                request.getServletPath());
+        return new ErrorCodeResponse(ErrorCode.PARAMETER_ERROR);
     }
 
-    @ExceptionHandler(NotFoundEmployeeException.class)
+    @ExceptionHandler(ErrorCodeException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleNotFoundEmployeeException(HttpServletRequest request,
-                                                         NotFoundEmployeeException notFoundEmployeeException) {
-        LOGGER.error("error: " + notFoundEmployeeException.getMessage());
-        return new ErrorResponse(HttpStatus.BAD_REQUEST,
-                notFoundEmployeeException.getClass().getName(),
-                notFoundEmployeeException.getMessage(),
-                request.getServletPath());
+    public ErrorCodeResponse handleNotFoundEmployeeException(HttpServletRequest request,
+                                                             ErrorCodeException errorCodeException) {
+        LOGGER.error(errorCodeException.getMessage());
+        return new ErrorCodeResponse(errorCodeException.getErrorCode());
     }
 }
