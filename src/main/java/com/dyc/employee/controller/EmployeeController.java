@@ -2,6 +2,7 @@ package com.dyc.employee.controller;
 
 import java.util.List;
 
+import com.dyc.employee.exception.NotFoundEmployeeException;
 import com.dyc.employee.model.Employee;
 import com.dyc.employee.repository.EmployeeRepository;
 import org.slf4j.Logger;
@@ -51,5 +52,20 @@ public class EmployeeController {
 		LOGGER.info("Employee find: organizationId={}", organizationId);
 		return repository.findByOrganization(organizationId);
 	}
-	
+
+
+	@GetMapping("/error/{id}")
+	public Employee testOther(@PathVariable("id") Long id) {
+		Integer.parseInt("abc");
+		LOGGER.info("error find: id={}", id);
+		return repository.findById(id);
+	}
+
+	@GetMapping("/error/notfound/{id}")
+	public Employee testNotFondError(@PathVariable("id") Long id) {
+		if(2>1){
+			throw  new NotFoundEmployeeException("not found employee for id=" + id);
+		}
+		return repository.findById(id);
+	}
 }
