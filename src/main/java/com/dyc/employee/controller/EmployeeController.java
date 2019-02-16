@@ -3,6 +3,7 @@ package com.dyc.employee.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.dyc.employee.dto.ResponseDto;
 import com.dyc.employee.exception.ErrorCode;
 import com.dyc.employee.exception.ErrorCodeException;
 import com.dyc.employee.model.Employee;
@@ -59,6 +60,20 @@ public class EmployeeController {
         return employeeService.findByOrganization(organizationId);
     }
 
+    //返回通用结构体  成功
+    @GetMapping("/dto1/{id}")
+    public ResponseDto findByEmployeeId(@PathVariable("id") String id) {
+        LOGGER.info("Employee find: id={}", id);
+        return new ResponseDto(repository.findById(id));
+    }
+
+    //返回通用结构体  错误
+    @GetMapping("/dto2/{id}")
+    public ResponseDto findByEmployeeId2(@PathVariable("id") String id) {
+        Integer.parseInt("abc");
+        return new ResponseDto(repository.findById(id));
+    }
+
 
     @GetMapping("/error/{id}")
     public Optional<Employee> testOther(@PathVariable("id") String id) {
@@ -73,4 +88,5 @@ public class EmployeeController {
         }
         return repository.findById(id);
     }
+
 }

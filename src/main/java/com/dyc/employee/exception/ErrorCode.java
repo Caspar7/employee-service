@@ -5,6 +5,11 @@ public enum ErrorCode {
     /**
      * 服务内部错误
      */
+    SUCCESS(0),
+
+    /**
+     * 服务内部错误
+     */
     INTERNAL_SERVER_ERROR(20000),
 
     /**

@@ -2,9 +2,9 @@ package com.dyc.employee.exception;
 
 public class ErrorCodeResponse {
 
-    private String errmsg;
-
     private int errcode;
+
+    private String errmsg;
 
     public ErrorCodeResponse(int errcode,String errmsg)
     {

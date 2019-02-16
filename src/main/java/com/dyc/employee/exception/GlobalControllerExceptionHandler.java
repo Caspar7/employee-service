@@ -1,5 +1,6 @@
 package com.dyc.employee.exception;
 
+import com.dyc.employee.dto.ResponseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -16,13 +17,25 @@ public class GlobalControllerExceptionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalControllerExceptionHandler.class);
 
+      //错误码返回 异常捕获
+//    @ExceptionHandler(Exception.class)
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    public ErrorCodeResponse handleException(HttpServletRequest request,
+//                                             Exception exception) {
+//        LOGGER.error("error: ", exception);
+//        return new ErrorCodeResponse(ErrorCode.INTERNAL_SERVER_ERROR);
+//    }
+
+
+    //返回通用结构体 异常捕获
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorCodeResponse handleException(HttpServletRequest request,
-                                             Exception exception) {
+    public ResponseDto handleException(HttpServletRequest request,
+                                       Exception exception) {
         LOGGER.error("error: ", exception);
-        return new ErrorCodeResponse(ErrorCode.INTERNAL_SERVER_ERROR);
+        return new ResponseDto(ErrorCode.INTERNAL_SERVER_ERROR,null);
     }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
