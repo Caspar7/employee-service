@@ -37,7 +37,7 @@ public class GlobalControllerExceptionHandler {
 
     @ExceptionHandler(ErrorCodeException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorCodeResponse handleNotFoundEmployeeException(HttpServletRequest request,
+    public ErrorCodeResponse handleErrorCodeException(HttpServletRequest request,
                                                              ErrorCodeException errorCodeException) {
         LOGGER.error(errorCodeException.getMessage());
         return new ErrorCodeResponse(errorCodeException.getErrorCode());
