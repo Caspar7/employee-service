@@ -1,47 +1,47 @@
 package com.dyc.employee.model;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.util.Objects;
+
+@Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Employee {
 
-	private Long id;
-	private Long organizationId;
-	private Long departmentId;
+	@Id
+	@GeneratedValue(generator = "employeeGenerator")
+	@GenericGenerator(name = "employeeGenerator", strategy = "assigned")
+	@Column(length = 64)
+	private String id;
+	private String organizationId;
+	private String departmentId;
 	private String name;
-	private int age;
+	private Integer age;
 	private String position;
 
-	public Employee() {
-
-	}
-	
-	public Employee(Long organizationId, Long departmentId, String name, int age, String position) {
-		this.organizationId = organizationId;
-		this.departmentId = departmentId;
-		this.name = name;
-		this.age = age;
-		this.position = position;
-	}
-
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public Long getOrganizationId() {
+	public String getOrganizationId() {
 		return organizationId;
 	}
 
-	public void setOrganizationId(Long organizationId) {
+	public void setOrganizationId(String organizationId) {
 		this.organizationId = organizationId;
 	}
 
-	public Long getDepartmentId() {
+	public String getDepartmentId() {
 		return departmentId;
 	}
 
-	public void setDepartmentId(Long departmentId) {
+	public void setDepartmentId(String departmentId) {
 		this.departmentId = departmentId;
 	}
 
@@ -53,11 +53,11 @@ public class Employee {
 		this.name = name;
 	}
 
-	public int getAge() {
+	public Integer getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 
@@ -71,8 +71,27 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", organizationId=" + organizationId + ", departmentId=" + departmentId
-				+ ", name=" + name + ", position=" + position + "]";
+		return "Employee{" +
+				"id='" + id + '\'' +
+				", organizationId='" + organizationId + '\'' +
+				", departmentId='" + departmentId + '\'' +
+				", name='" + name + '\'' +
+				", age=" + age +
+				", position='" + position + '\'' +
+				'}';
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		com.dyc.employee.model.Employee employee = (com.dyc.employee.model.Employee) o;
+		return Objects.equals(id, employee.id);
+	}
+
+	@Override
+	public int hashCode() {
+
+		return Objects.hash(id);
+	}
 }
