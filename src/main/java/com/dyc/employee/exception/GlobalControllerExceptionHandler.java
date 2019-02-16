@@ -29,7 +29,6 @@ public class GlobalControllerExceptionHandler {
 
     //返回通用结构体 异常捕获
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseDto handleException(HttpServletRequest request,
                                        Exception exception) {
         LOGGER.error("error: ", exception);
