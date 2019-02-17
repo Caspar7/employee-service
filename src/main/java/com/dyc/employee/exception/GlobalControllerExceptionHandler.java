@@ -17,7 +17,7 @@ public class GlobalControllerExceptionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalControllerExceptionHandler.class);
 
-      //错误码返回 异常捕获
+//    //错误码返回 异常捕获
 //    @ExceptionHandler(Exception.class)
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 //    public ErrorCodeResponse handleException(HttpServletRequest request,
