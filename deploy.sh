@@ -28,14 +28,6 @@ if [ ! -z "$imagesid" ]; then
     docker rmi $imagesid -f
 fi
 
-echo "scp docker image to target server"
-src_dir=${images_path}${serviceName}_${BUILD_NUMBER}.tar
-dest_dir=${images_path}
-host=35.220.222.101
-port=22
-username=root
-password=root
-
 
 echo "deploy docker container..."
 deployPort=$(randPort 10000 60000)
@@ -47,10 +39,21 @@ if [ "local" = "${env}" ];then
 fi
 
 
-# scp docker file to remote server
-#./expect_scp.sh $host $port $username $password $src_dir $dest_dir
+if [ "uat" = "${env}" ];then
+    echo "scp docker image to target server"
+    src_dir=${images_path}${serviceName}_${BUILD_NUMBER}.tar
+    dest_dir=${images_path}
+    host=35.220.222.101
+    port=22
+    username=root
+    password=root
+    # scp docker file to remote server
+    ./expect_scp.sh $host $port $username $password $src_dir $dest_dir
 
-#yum install sshpass if not install sshpass at build server
-#sshpass -p $password ssh $username@${host} "docker load -i ${images_path}/${serviceName}_${BUILD_NUMBER}.tar"
-#sshpass -p $password ssh $username@${host} "docker run --env env=${env} -it -d -p 2222:2222 --name ${serviceName} ${serviceName}:${BUILD_NUMBER}"
+    echo "run docker to target env server"
+    #yum install sshpass if not install sshpass at build server
+    sshpass -p $password ssh $username@${host} "docker load -i ${images_path}/${serviceName}_${BUILD_NUMBER}.tar"
+    sshpass -p $password ssh $username@${host} ${runCmd}
+    exit 0
+fi
 
