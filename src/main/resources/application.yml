@@ -1,10 +1,10 @@
 server:
-  port: 2222
+  port: ${deployPort}
 spring:
   application:
     name: employee-service
   profiles:
-    active: uat
+    active: ${env}
 
 #admin client config
 management:
