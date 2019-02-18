@@ -3,21 +3,12 @@
 BUILD_NUMBER=$1
 env=$2
 serviceName="employee-service"
-running=`docker ps | grep ${serviceName} | awk '{print $1}'`
-if [ ! -z "$running" ]; then
-    docker stop $running
-fi
+images_path="/home/docker/images/"
 
-container=`docker ps -a | grep ${serviceName} | awk '{print $1}'`
-if [ ! -z "$container" ]; then
-    docker rm $container -f
-fi
+echo "scp docker image to target server"
 
-imagesid=`docker images|grep -i ${serviceName}|awk '{print $3}'`
-if [ ! -z "$imagesid" ]; then
-    docker rmi $imagesid -f
-fi
+echo "load docker images to local"
+#docker load -i ${images_path}/${serviceName}_${BUILD_NUMBER}.tar
 
-docker build -t ${serviceName}:$BUILD_NUMBER .
-
-docker run --env env=${env} -it -d -p 2222:2222 --name ${serviceName} ${serviceName}:$BUILD_NUMBER
+echo "run container..."
+docker run --env env=${env} -it -d -p 2222:2222 --name ${serviceName} ${serviceName}:${BUILD_NUMBER}

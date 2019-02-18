@@ -17,6 +17,7 @@ public class JasyptTest {
     public void encrypt() {
         System.out.println(stringEncryptor.encrypt("zjp"));
         System.out.println(stringEncryptor.encrypt("123456"));
+        System.out.println(stringEncryptor.encrypt("root"));
     }
 
     @Test
