@@ -4,6 +4,21 @@ BUILD_NUMBER=$1
 serviceName="employee-service"
 images_path="/home/docker/images/"
 
+running=`docker ps | grep ${serviceName} | awk '{print $1}'`
+if [ ! -z "$running" ]; then
+    docker stop $running
+fi
+
+container=`docker ps -a | grep ${serviceName} | awk '{print $1}'`
+if [ ! -z "$container" ]; then
+    docker rm $container -f
+fi
+
+imagesid=`docker images|grep -i ${serviceName}|awk '{print $3}'`
+if [ ! -z "$imagesid" ]; then
+    docker rmi $imagesid -f
+fi
+
 echo "start build docker image..."
 docker build -t ${serviceName}:${BUILD_NUMBER} .
 
