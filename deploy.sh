@@ -32,9 +32,11 @@ fi
 echo "deploy docker container..."
 deployPort=$(randPort 10000 60000)
 
-runPara="--env env=uat --env deployIp=${deployIp} --env deployPort=${deployPort} -it -d -p ${deployPort}:${deployPort} --name ${serviceName} ${serviceName}:${BUILD_NUMBER}"
+loadcmd="docker load -i ${images_path}${serviceName}_${BUILD_NUMBER}.tar"
+runcmd="docker run --env env=uat --env deployIp=${deployIp} --env deployPort=${deployPort} -it -d -p ${deployPort}:${deployPort} --name ${serviceName} ${serviceName}:${BUILD_NUMBER}"
 if [ "local" = "${env}" ];then
-    docker run ${runPara}
+    ${loadcmd}
+    ${runcmd}
     exit 0
 fi
 
@@ -52,8 +54,8 @@ if [ "uat" = "${env}" ];then
 
     echo "run docker to target env server"
     #yum install sshpass if not install sshpass at build server
-    sshpass -p $password ssh $username@${host} "docker load -i ${images_path}/${serviceName}_${BUILD_NUMBER}.tar"
-    sshpass -p $password ssh $username@${host} "docker run ${runPara}"
+    sshpass -p $password ssh $username@${host} ${loadcmd}
+    sshpass -p $password ssh $username@${host} ${runcmd}
     exit 0
 fi
 
