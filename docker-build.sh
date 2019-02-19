@@ -9,5 +9,5 @@ echo "create docker images dir ..."
 mkdir -p ${serviceName}-${BUILD_NUMBER}
 
 echo "save docker image ${serviceName}_${BUILD_NUMBER}.tar ..."
-docker save -o ./${serviceName}-${BUILD_NUMBER}/${serviceName}_${BUILD_NUMBER}.tar ${serviceName}:${BUILD_NUMBER}
-cp ./docker-deploy.sh ./${serviceName}-${BUILD_NUMBER}
+docker save -o ./build/${serviceName}-${BUILD_NUMBER}/${serviceName}_${BUILD_NUMBER}.tar ${serviceName}:${BUILD_NUMBER}
+cp ./docker-deploy.sh ./build/${serviceName}-${BUILD_NUMBER}
