@@ -29,8 +29,6 @@ fi
 echo "load docker images ${serviceName}_${BUILD_NUMBER}.tar .."
 docker load -i ${serviceName}_${BUILD_NUMBER}.tar
 
-echo "deploy docker container..."
+echo "run docker container..."
 deployPort=$(randPort 10000 60000)
-/opt/deploy-service/clear-service.sh ${serviceName}
-/opt/deploy-service/docker-image.sh load ${serviceName} ${BUILD_NUMBER}
 docker run --env env=${env} --env deployIp=${deployIp} --env deployPort=${deployPort} -it -d -p ${deployPort}:${deployPort} --name ${serviceName} ${serviceName}:${BUILD_NUMBER}
