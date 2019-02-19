@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 serviceName="employee-service"
 BUILD_NUMBER=$1
-env=$2
 
 #get rand port
 randPort(){
