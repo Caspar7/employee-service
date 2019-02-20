@@ -31,8 +31,8 @@ echo "load docker images ${serviceName}_${BUILD_NUMBER}.tar .."
 docker load -i ${serviceName}_${BUILD_NUMBER}.tar
 
 echo "run docker container..."
-for ((i=0; i<=${run_num}; i++));
+for ((i=1; i<=${run_num}; i++));
 {
     deployPort=$(randPort 9000 10000)
-    docker run --env env=${env} --env deployIp=${deployIp} --env deployPort=${deployPort} -it -d -p ${deployPort}:${deployPort} --name ${serviceName} ${serviceName}:${BUILD_NUMBER}
+    docker run --env env=${env} --env deployIp=${deployIp} --env deployPort=${deployPort} -it -d -p ${deployPort}:${deployPort} --name ${serviceName}${i} ${serviceName}:${BUILD_NUMBER}
 }
