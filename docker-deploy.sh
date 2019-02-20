@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 serviceName="employee-service"
 BUILD_NUMBER=$1
+run_num=$2
 
 #get rand port
 randPort(){
@@ -30,5 +31,8 @@ echo "load docker images ${serviceName}_${BUILD_NUMBER}.tar .."
 docker load -i ${serviceName}_${BUILD_NUMBER}.tar
 
 echo "run docker container..."
-deployPort=$(randPort 9000 10000)
-docker run --env env=${env} --env deployIp=${deployIp} --env deployPort=${deployPort} -it -d -p ${deployPort}:${deployPort} --name ${serviceName} ${serviceName}:${BUILD_NUMBER}
+for ((i=0; i<=${run_num}; i++));
+{
+    deployPort=$(randPort 9000 10000)
+    docker run --env env=${env} --env deployIp=${deployIp} --env deployPort=${deployPort} -it -d -p ${deployPort}:${deployPort} --name ${serviceName} ${serviceName}:${BUILD_NUMBER}
+}
