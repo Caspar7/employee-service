@@ -11,7 +11,7 @@ eureka:
     healthcheck:
       enabled: true #开启健康检查（需要spring-boot-starter-actuator依赖）
     serviceUrl:
-      defaultZone: http://35.201.196.124:1111/eureka/,http://35.220.222.101:1111/eureka/
+      defaultZone: http://192.168.2.53/eureka/
 
 # datasource
 spring:
