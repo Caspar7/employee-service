@@ -2,7 +2,7 @@
 serviceName="employee-service"
 BUILD_NUMBER=$1
 run_num=$2
-deployIp=$3
+serviceIp=$3
 env=$4
 
 
@@ -37,5 +37,5 @@ echo "run docker container..."
 for ((i=1; i<=${run_num}; i++));
 {
     deployPort=$(randPort 9000 10000)
-    docker run --env env=${env} --env deployIp=${deployIp} --env deployPort=${deployPort} -it -d -p ${deployPort}:${deployPort} --name ${serviceName}${i} ${serviceName}:${BUILD_NUMBER}
+    docker run --env env=${env} --env serviceIp=${serviceIp} --env deployPort=${deployPort} -it -d -p ${deployPort}:${deployPort} --name ${serviceName}${i} ${serviceName}:${BUILD_NUMBER}
 }
