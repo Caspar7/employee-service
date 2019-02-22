@@ -57,6 +57,11 @@ public class EmployeeController {
         return employeeService.findByOrganization(organizationId);
     }
 
+    @RequestMapping("/list/page")
+    public List<Employee> listByPage(int page,int size){
+        return employeeService.listByPage(page, size);
+    }
+
     //返回通用结构体  成功
     @GetMapping("/dto1/{id}")
     public ResponseDto findByEmployeeId(@PathVariable("id") String id) {
