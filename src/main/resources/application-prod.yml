@@ -28,7 +28,7 @@ spring:
         usertype:
           autoRegisterUserTypes: true
 
-# jasypt 加密所需的salt(盐)
+# jasypt 加密所需的salt(盐) jk
 jasypt:
   encryptor:
     password: caspar_du
