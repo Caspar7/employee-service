@@ -26,6 +26,8 @@ public class JasyptTest {
     public void decrypt(){
         System.out.println(stringEncryptor.decrypt("1E01WYZE8d+w7kWB0VOm5Q=="));
         System.out.println(stringEncryptor.decrypt("ENomjjhuKHlpdNh8YwjceQ=="));
+        System.out.println(stringEncryptor.decrypt("gPWdHfd699ibTRIhxWzSTw=="));
+
     }
 
 }
