@@ -3,6 +3,7 @@ package com.dyc.employee.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.dyc.employee.dto.EmployeeRequestDto;
 import com.dyc.employee.dto.ResponseDto;
 import com.dyc.employee.exception.ErrorCode;
 import com.dyc.employee.exception.ErrorCodeException;
@@ -28,10 +29,25 @@ public class EmployeeController {
     EmployeeRepository repository;
 
     @PostMapping("/")
+    @ResponseBody
     public Employee add(@RequestBody Employee employee) {
         LOGGER.info("Employee add: {}", employee);
         return repository.save(employee);
     }
+
+//    @PostMapping("/")
+//    @ResponseBody
+//    public Employee create(@RequestBody EmployeeRequestDto requestDto) {
+//        Employee e = new Employee();
+//        e.setId("9");
+//        e.setName("dyc");
+//        e.setAge(99);
+//        e.setDepartmentId("1");
+//        e.setOrganizationId("1");
+//        e.setPosition("Soft");
+//        repository.save(e);
+//        return e;
+//    }
 
     @GetMapping("/{id}")
     public Optional<Employee> findById(@PathVariable("id") String id) {
