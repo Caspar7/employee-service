@@ -23,6 +23,7 @@ public enum ErrorCode {
     EMPLOYEE_NOT_FOUND(20002,"employee not found"),
     ;
 
+
     private int code;
     private String msg;
 

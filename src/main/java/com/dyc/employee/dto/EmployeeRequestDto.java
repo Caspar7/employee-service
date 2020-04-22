@@ -1,5 +1,7 @@
 package com.dyc.employee.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Max;
@@ -8,26 +10,24 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Validated
+@ApiModel
 public class EmployeeRequestDto {
-    @NotNull
-    private String id;
+
     private String organizationId;
+
+    @ApiModelProperty(value = "部门id",required = true)
+    @NotEmpty(message = "部门id不能为空")
     private String departmentId;
+
     @NotEmpty(message = "姓名不能为空")
     private String name;
-    @Max(value = 120,message = "年龄不能超过120岁")
+
+    @Max(value = 120, message = "年龄不能超过120岁")
     private Integer age;
 
-    @Size(max = 1, min = 10)
+    @NotNull(message = "职位不能为空")
+    @Size(max = 10, min = 3, message = "职位长度需要在1-10之间")
     private String position;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getOrganizationId() {
         return organizationId;

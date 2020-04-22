@@ -1,10 +1,9 @@
 package com.dyc.employee.exception;
 
-import com.dyc.employee.dto.ResponseDto;
+import com.dyc.employee.dto.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.error.ErrorController;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,25 +31,24 @@ public class GlobaleFrameworkErrorHandler implements ErrorController {
     public Object handleError(HttpServletRequest request, HttpServletResponse response) {
         Object statusCodeObj = request.getAttribute("javax.servlet.error.status_code");
         Object execptionObj = request.getAttribute("javax.servlet.error.exception");
-
         if (null != statusCodeObj && null != execptionObj) {
-            Integer statusCode = (Integer) statusCodeObj;
+//            Integer statusCode = (Integer) statusCodeObj;
             Exception exception = (Exception) statusCodeObj;
 
             if (exception instanceof MethodArgumentNotValidException) {
                 MethodArgumentNotValidException ex = (MethodArgumentNotValidException) exception;
                 String message = String.join(", ", ex.getBindingResult().getFieldErrors().stream()
-                        .map(e -> e.getField() + " is required")
+                        .map(e -> e.getField() + ":" + e.getDefaultMessage())
                         .collect(Collectors.toList()));
 
-                LOGGER.error("framework error: " + message);
-//                response.setStatus(HttpStatus.OK.value());
-                return new ErrorCodeResponse(ErrorCode.PARAMETER_ERROR);
+                LOGGER.error("handleError: " + message);
+                LOGGER.error("handException: ", exception);
+                return ApiResponse.fail(ErrorCode.PARAMETER_ERROR, message);
             }
 
             LOGGER.error(ErrorCode.INTERNAL_SERVER_ERROR.getMsg(), exception);
         }
 
-        return new ResponseDto(ErrorCode.INTERNAL_SERVER_ERROR);
+        return ApiResponse.fail(ErrorCode.INTERNAL_SERVER_ERROR);
     }
 }

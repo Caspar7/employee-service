@@ -1,15 +1,15 @@
 package com.dyc.employee.exception;
 
-public class ErrorCodeException extends RuntimeException {
+public class BusinessException extends RuntimeException {
 
     private ErrorCode errorCode;
 
-    public ErrorCodeException(String message) {
+    public BusinessException(String message) {
         super(message);
     }
 
 
-    public ErrorCodeException(ErrorCode errorCode,String message) {
+    public BusinessException(ErrorCode errorCode, String message) {
         super(message);
         this.errorCode = errorCode;
     }

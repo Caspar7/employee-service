@@ -2,11 +2,12 @@ package com.dyc.employee.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.dyc.employee.dto.EmployeeRequestDto;
-import com.dyc.employee.dto.ResponseDto;
+import com.dyc.employee.dto.ApiResponse;
 import com.dyc.employee.exception.ErrorCode;
-import com.dyc.employee.exception.ErrorCodeException;
+import com.dyc.employee.exception.BusinessException;
 import com.dyc.employee.model.Employee;
 import com.dyc.employee.repository.EmployeeRepository;
 import com.dyc.employee.service.EmployeeService;
@@ -14,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @RestController
@@ -30,24 +33,18 @@ public class EmployeeController {
 
     @PostMapping("/")
     @ResponseBody
-    public Employee add(@RequestBody Employee employee) {
+    public Employee add(@RequestBody @Valid EmployeeRequestDto requestDto) {
+        Employee employee = new Employee();
+        employee.setId(UUID.randomUUID().toString());
+        employee.setName(requestDto.getName());
+        employee.setAge(requestDto.getAge());
+        employee.setDepartmentId(requestDto.getDepartmentId());
+        employee.setOrganizationId(requestDto.getOrganizationId());
+        employee.setPosition(requestDto.getPosition());
         LOGGER.info("Employee add: {}", employee);
         return repository.save(employee);
     }
 
-//    @PostMapping("/")
-//    @ResponseBody
-//    public Employee create(@RequestBody EmployeeRequestDto requestDto) {
-//        Employee e = new Employee();
-//        e.setId("9");
-//        e.setName("dyc");
-//        e.setAge(99);
-//        e.setDepartmentId("1");
-//        e.setOrganizationId("1");
-//        e.setPosition("Soft");
-//        repository.save(e);
-//        return e;
-//    }
 
     @GetMapping("/{id}")
     public Optional<Employee> findById(@PathVariable("id") String id) {
@@ -74,22 +71,22 @@ public class EmployeeController {
     }
 
     @RequestMapping("/list/page")
-    public List<Employee> listByPage(int page,int size){
+    public List<Employee> listByPage(int page, int size) {
         return employeeService.listByPage(page, size);
     }
 
     //返回通用结构体  成功
     @GetMapping("/dto1/{id}")
-    public ResponseDto findByEmployeeId(@PathVariable("id") String id) {
+    public ApiResponse findByEmployeeId(@PathVariable("id") String id) {
         LOGGER.info("Employee find: id={}", id);
-        return new ResponseDto(repository.findById(id));
+        return ApiResponse.ok(repository.findById(id));
     }
 
     //返回通用结构体  错误
     @GetMapping("/dto2/{id}")
-    public ResponseDto findByEmployeeId2(@PathVariable("id") String id) {
+    public ApiResponse findByEmployeeId2(@PathVariable("id") String id) {
         Integer.parseInt("abc");
-        return new ResponseDto(repository.findById(id));
+        return ApiResponse.ok(repository.findById(id));
     }
 
 
@@ -102,7 +99,7 @@ public class EmployeeController {
     @GetMapping("/error/notfound/{id}")
     public Optional<Employee> testNotFondError(@PathVariable("id") String id) {
         if (2 > 1) {
-            throw new ErrorCodeException(ErrorCode.EMPLOYEE_NOT_FOUND, "EMPLOYEE not found in db.");
+            throw new BusinessException(ErrorCode.EMPLOYEE_NOT_FOUND, "EMPLOYEE not found in db.");
         }
         return repository.findById(id);
     }

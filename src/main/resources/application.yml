@@ -2,7 +2,7 @@ spring:
   application:
     name: employee-service
   profiles:
-    active: ${env}
+    active: dev
 
 #admin client config
 management:
